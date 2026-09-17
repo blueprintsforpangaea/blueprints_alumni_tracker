@@ -72,9 +72,10 @@ for (const mode of [':root', '.dark'] as const) {
       'primary-foreground on primary',
       token(mode, 'primary-foreground'),
       token(mode, 'primary'),
-      // Light mode ships at 4.21:1 and predates this work, so hold it at AA
-      // large rather than restyling the light palette from inside a dark-mode
-      // change. Dark mode is new and must clear full AA.
+      // Light --primary ships at 4.21:1, a pre-existing gap held at AA large
+      // and left for a change of its own. (The gradient below *is* fixed in
+      // both modes, because it failed at small-text call sites in light too —
+      // 10px initials, filter pills — not only in dark.)
       label === 'dark' ? AA_TEXT : AA_LARGE,
     ],
     ['foreground on background', token(mode, 'foreground'), token(mode, 'background'), AA_TEXT],

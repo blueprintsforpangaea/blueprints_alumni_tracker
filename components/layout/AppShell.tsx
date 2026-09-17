@@ -165,13 +165,18 @@ export default function AppShell({
               <div className="flex items-center justify-center p-4">
                 {/* Two marks, one per theme: the colour logo's ink is navy and
                     its globe grid lines are knockouts, so it needs a light
-                    background; the white mark is a knockout built for dark. */}
+                    background; the white mark is a knockout built for dark.
+
+                    Default loading="lazy" plus fetchPriority, not preload:
+                    lazy is what stops the browser fetching the mark that is
+                    display:none in this theme. See AuthFrame for the full
+                    note. */}
                 <Image
                   src="/brand/blueprints-logo.png"
                   alt="Blueprints for Pangaea"
                   width={936}
                   height={556}
-                  priority
+                  fetchPriority="high"
                   className="h-auto w-[11rem] dark:hidden"
                 />
                 <Image
@@ -179,6 +184,7 @@ export default function AppShell({
                   alt="Blueprints for Pangaea"
                   width={936}
                   height={556}
+                  fetchPriority="high"
                   className="hidden h-auto w-[11rem] dark:block"
                 />
               </div>

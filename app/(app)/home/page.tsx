@@ -154,12 +154,16 @@ export default function HomePage() {
               <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,oklch(0.98_0.015_245),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,oklch(0.3_0.04_258),transparent_72%)]" />
               <div className="relative flex flex-col items-center gap-6">
                 <>
+                  {/* Default loading="lazy" plus fetchPriority, not preload:
+                      lazy is what stops the browser fetching the mark that is
+                      display:none in this theme. See AuthFrame for the full
+                      note. */}
                   <Image
                     src="/brand/blueprints-logo.png"
                     alt="Blueprints for Pangaea"
                     width={936}
                     height={556}
-                    priority
+                    fetchPriority="high"
                     className="h-auto w-full max-w-[16rem] dark:hidden"
                   />
                   <Image
@@ -167,6 +171,7 @@ export default function HomePage() {
                     alt="Blueprints for Pangaea"
                     width={936}
                     height={556}
+                    fetchPriority="high"
                     className="hidden h-auto w-full max-w-[16rem] dark:block"
                   />
                 </>

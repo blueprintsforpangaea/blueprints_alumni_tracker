@@ -12,13 +12,19 @@ export default function AuthFrame({
         <section className="flex w-full max-w-md flex-col items-center justify-center text-center">
           {/* Two marks, one per theme: the colour logo's ink is navy and its
               globe grid lines are knockouts, so it needs a light background;
-              the white mark is a knockout built for dark. */}
+              the white mark is a knockout built for dark.
+
+              Both stay on the default loading="lazy" and use fetchPriority
+              rather than preload. Per the next/image theme-detection docs,
+              lazy is what keeps the browser from fetching both marks; preload
+              or loading="eager" would pull down the one that is display:none.
+              (`priority` is also deprecated as of Next 16.) */}
           <Image
             src="/brand/blueprints-logo.png"
             alt="Blueprints for Pangaea"
             width={936}
             height={556}
-            priority
+            fetchPriority="high"
             className="mb-8 h-auto w-full max-w-[14rem] dark:hidden"
           />
           <Image
@@ -26,6 +32,7 @@ export default function AuthFrame({
             alt="Blueprints for Pangaea"
             width={936}
             height={556}
+            fetchPriority="high"
             className="mb-8 hidden h-auto w-full max-w-[14rem] dark:block"
           />
           <div className="flex w-full justify-center">{children}</div>
