@@ -276,7 +276,7 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
                   className={cn(
                     'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-150',
                     active
-                      ? 'bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
+                      ? 'brand-gradient text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
                       : 'brand-chip text-muted-foreground hover:text-foreground'
                   )}
                 >

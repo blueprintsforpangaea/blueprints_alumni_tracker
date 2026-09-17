@@ -147,7 +147,7 @@ export default function AttendanceRoster({ eventId, members, initialStatuses }: 
                   className={cn(
                     'rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors',
                     statuses[member.id] === value
-                      ? 'bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-primary-foreground'
+                      ? 'brand-gradient text-primary-foreground'
                       : 'brand-chip text-muted-foreground hover:text-foreground'
                   )}
                 >

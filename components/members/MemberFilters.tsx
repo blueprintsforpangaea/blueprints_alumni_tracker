@@ -69,7 +69,7 @@ export default function MemberFilters({ years, majors, teams }: Props) {
             placeholder="Search by name..."
             value={q}
             onChange={(e) => updateSearch(e.target.value)}
-            className="pl-8 h-8 bg-white/60 border-[oklch(0.8_0.05_252/0.45)]"
+            className="pl-8 h-8 brand-field"
           />
         </div>
 
@@ -82,7 +82,7 @@ export default function MemberFilters({ years, majors, teams }: Props) {
               className={cn(
                 'rounded-full px-3 py-1 text-xs font-medium transition-all duration-150',
                 status === opt
-                  ? 'bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
+                  ? 'brand-gradient text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
                   : 'brand-chip text-muted-foreground hover:text-foreground'
               )}
             >
@@ -150,7 +150,7 @@ function FilterSelect({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       className={cn(
-        'h-8 rounded-xl border border-[oklch(0.8_0.05_252/0.45)] bg-white/60 px-2.5 text-xs font-medium transition-colors outline-none',
+        'h-8 rounded-xl brand-field border px-2.5 text-xs font-medium transition-colors outline-none',
         'focus:border-ring focus:ring-2 focus:ring-ring/20',
         value ? 'text-foreground' : 'text-muted-foreground'
       )}

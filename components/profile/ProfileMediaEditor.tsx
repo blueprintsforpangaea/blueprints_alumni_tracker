@@ -136,7 +136,7 @@ export default function ProfileMediaEditor({
                   className="size-24 rounded-full border-4 avatar-ring object-cover shadow-[0_8px_24px_oklch(0.22_0.07_257/0.15)]"
                 />
               ) : (
-                <div className="flex size-24 items-center justify-center rounded-full border-4 avatar-ring bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-2xl font-bold text-primary-foreground shadow-[0_8px_24px_oklch(0.5_0.18_257/0.2)]">
+                <div className="flex size-24 items-center justify-center rounded-full border-4 avatar-ring brand-gradient text-2xl font-bold text-primary-foreground shadow-[0_8px_24px_oklch(0.5_0.18_257/0.2)]">
                   {initials}
                 </div>
               )}

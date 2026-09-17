@@ -176,11 +176,9 @@ export default function AppShell({
                 />
                 <Image
                   src="/brand/blueprints-logo-white.png"
-                  alt=""
-                  aria-hidden
+                  alt="Blueprints for Pangaea"
                   width={936}
                   height={556}
-                  priority
                   className="hidden h-auto w-[11rem] dark:block"
                 />
               </div>
@@ -256,7 +254,7 @@ export default function AppShell({
                 rel="noopener noreferrer"
                 className={cn(
                   "group relative flex h-11 items-center gap-3 rounded-2xl px-4 text-[15px] font-medium transition-all duration-150",
-                  "bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.08),oklch(0.64_0.16_252/0.06))] text-[var(--color-brand-ocean)] hover:bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.14),oklch(0.64_0.16_252/0.10))] hover:text-[var(--color-brand-bright)]",
+                  "bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.08),oklch(0.64_0.16_252/0.06))] text-[var(--color-brand-ocean)] hover:bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.14),oklch(0.64_0.16_252/0.10))] hover:text-[var(--brand-link-hover)]",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
               >

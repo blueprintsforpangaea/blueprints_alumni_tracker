@@ -27,7 +27,7 @@ function MemberChip({ profile }: { profile: Profile }) {
           className="size-6 rounded-full object-cover ring-1 avatar-ring"
         />
       ) : (
-        <span className="flex size-6 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-[10px] font-semibold text-primary-foreground">
+        <span className="flex size-6 items-center justify-center rounded-full brand-gradient text-[10px] font-semibold text-primary-foreground">
           {initials}
         </span>
       )}

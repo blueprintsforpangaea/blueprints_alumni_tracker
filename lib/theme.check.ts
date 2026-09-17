@@ -86,13 +86,49 @@ for (const mode of [':root', '.dark'] as const) {
       token(mode, 'background'),
       AA_TEXT,
     ],
+    // Sidebar text sits on --sidebar, not --background. Checking it against
+    // --background exercised a pair that never renders. --sidebar carries an
+    // alpha that `token()` drops, but it is within 0.03 L of --background in
+    // both modes, so the opaque reading is a fair stand-in for the composite.
     [
-      'sidebar-foreground on background',
+      'sidebar-foreground on sidebar',
       token(mode, 'sidebar-foreground'),
-      token(mode, 'background'),
+      token(mode, 'sidebar'),
+      AA_TEXT,
+    ],
+    // The brand gradient behind white labels (.brand-gradient). Built from
+    // --brand-ocean/--brand-bright it read 3.15:1 falling to 2.42:1 in dark and
+    // 4.92:1 falling to 3.27:1 in light — the same failure the --primary pair
+    // above was fixed for, live on ~15 surfaces while this file stayed green.
+    // Both stops are asserted: a gradient is only as legible as its lightest
+    // point.
+    [
+      'primary-foreground on gradient-from',
+      token(mode, 'primary-foreground'),
+      token(mode, 'gradient-from'),
+      AA_TEXT,
+    ],
+    [
+      'primary-foreground on gradient-to',
+      token(mode, 'primary-foreground'),
+      token(mode, 'gradient-to'),
+      AA_TEXT,
+    ],
+    // Sidebar link hover. It has to move *away* from the sidebar in both modes;
+    // reusing --brand-bright made light mode hover to 3.27:1, i.e. worse than
+    // resting.
+    [
+      'brand-link-hover on sidebar',
+      token(mode, 'brand-link-hover'),
+      token(mode, 'sidebar'),
       AA_TEXT,
     ],
   ]
+
+  // Deliberately unchecked: --surface-field, --surface-raised, --border-field,
+  // --avatar-ring and --connector. None of them carry text, and all but
+  // --avatar-ring are semi-transparent — `token()` reads only `L C H` and drops
+  // the alpha, so an assertion here would test a colour that never renders.
 
   for (const [name, fg, bg, minimum] of pairs) {
     const ratio = contrast(fg, bg)

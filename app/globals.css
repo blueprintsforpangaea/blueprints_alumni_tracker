@@ -120,6 +120,16 @@
   /* Lineage lines on the Connections page. */
   --connector: oklch(0.76 0.05 245 / 0.85);
 
+  /* The brand gradient, as its own pair rather than reusing --brand-ocean and
+     --brand-bright. Those two are also text colours, so they cannot be darkened
+     far enough to carry white labels without dulling every brand text run. Both
+     stops clear AA (4.5:1) against --primary-foreground; see lib/theme.check.ts. */
+  --gradient-from: oklch(0.46 0.13 252);
+  --gradient-to: oklch(0.54 0.16 252);
+  /* Link hover must darken in light mode and lighten in dark, so it is its own
+     token rather than a fixed --brand-* reference. */
+  --brand-link-hover: oklch(0.42 0.13 252);
+
   --sidebar: oklch(0.99 0.001 255 / 0.82);
   --sidebar-foreground: oklch(0.23 0.015 255);
   --sidebar-primary: oklch(0.58 0.17 255);
@@ -180,6 +190,13 @@
   --border-field: oklch(0.52 0.08 260 / 0.45);
   --avatar-ring: oklch(0.36 0.05 262);
   --connector: oklch(0.58 0.07 250 / 0.9);
+
+  /* Measured: the gradient built from --brand-ocean/--brand-bright put white
+     labels at 3.15:1 falling to 2.42:1 here — worse than the button pair that
+     was already treated as a bug. These stops clear AA at 6.99:1 and 4.97:1. */
+  --gradient-from: oklch(0.46 0.12 258);
+  --gradient-to: oklch(0.54 0.14 258);
+  --brand-link-hover: oklch(0.82 0.09 258);
 
   --sidebar: oklch(0.21 0.045 262 / 0.84);
   --sidebar-foreground: oklch(0.94 0.004 255);
@@ -271,8 +288,10 @@
     background: oklch(1 0 0 / 0.72);
     backdrop-filter: blur(22px) saturate(1.1);
   }
+  /* Dark surfaces sit on the same navy axis as the tokens (hue 262, ~0.04
+     chroma). On the old neutral axis they read grey against a navy page. */
   .dark .glass {
-    background: oklch(0.19 0.01 255 / 0.72);
+    background: oklch(0.19 0.042 262 / 0.72);
   }
 
   .brand-panel {
@@ -286,11 +305,11 @@
     backdrop-filter: blur(24px) saturate(1.06);
   }
   .dark .brand-panel {
-    background: oklch(0.2 0.01 255 / 0.82);
-    border-color: oklch(0.32 0.008 255 / 0.95);
+    background: oklch(0.21 0.045 262 / 0.82);
+    border-color: oklch(0.33 0.038 262 / 0.95);
     box-shadow:
-      0 20px 48px oklch(0.05 0.01 255 / 0.22),
-      0 2px 8px oklch(0.05 0.01 255 / 0.14),
+      0 20px 48px oklch(0.08 0.04 262 / 0.22),
+      0 2px 8px oklch(0.08 0.04 262 / 0.14),
       inset 0 1px 0 oklch(1 0 0 / 0.04);
   }
 
@@ -318,10 +337,10 @@
       inset 0 1px 0 oklch(1 0 0 / 0.85);
   }
   .dark .brand-chip {
-    background: oklch(0.26 0.018 256 / 0.75);
-    border-color: oklch(0.36 0.014 256 / 0.9);
+    background: oklch(0.27 0.044 262 / 0.75);
+    border-color: oklch(0.37 0.04 262 / 0.9);
     box-shadow:
-      0 1px 2px oklch(0.05 0.01 255 / 0.3),
+      0 1px 2px oklch(0.08 0.04 262 / 0.3),
       inset 0 1px 0 oklch(1 0 0 / 0.05);
   }
 
@@ -333,6 +352,14 @@
 
   .brand-surface {
     background: var(--surface-raised);
+  }
+
+  /* The brand gradient behind white labels — avatar fallbacks, selected pills,
+     page-header icon tiles. Was repeated inline at ~15 call sites as
+     `bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))]`,
+     which made the contrast of every one of them impossible to fix in one place. */
+  .brand-gradient {
+    background-image: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
   }
 
   .avatar-ring {

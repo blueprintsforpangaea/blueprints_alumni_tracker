@@ -23,11 +23,9 @@ export default function AuthFrame({
           />
           <Image
             src="/brand/blueprints-logo-white.png"
-            alt=""
-            aria-hidden
+            alt="Blueprints for Pangaea"
             width={936}
             height={556}
-            priority
             className="mb-8 hidden h-auto w-full max-w-[14rem] dark:block"
           />
           <div className="flex w-full justify-center">{children}</div>

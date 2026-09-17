@@ -449,7 +449,7 @@ function AvatarLink({
       href={`/profile/${profile.id}`}
       className={cn(
         dimensionClass,
-        'flex items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]'
+        'flex items-center justify-center rounded-full brand-gradient text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]'
       )}
     >
       {initials || '?'}

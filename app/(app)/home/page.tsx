@@ -108,7 +108,7 @@ export default function HomePage() {
                       href={app.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative overflow-hidden rounded-2xl bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] p-5 text-white shadow-[0_8px_24px_oklch(0.54_0.12_252/0.30)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_oklch(0.54_0.12_252/0.42)]"
+                      className="group relative overflow-hidden rounded-2xl brand-gradient p-5 text-white shadow-[0_8px_24px_oklch(0.54_0.12_252/0.30)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_oklch(0.54_0.12_252/0.42)]"
                     >
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(1_0_0/0.08),transparent_60%)]" />
                       <ExternalLink className="absolute right-4 top-4 size-3.5 opacity-50 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -164,11 +164,9 @@ export default function HomePage() {
                   />
                   <Image
                     src="/brand/blueprints-logo-white.png"
-                    alt=""
-                    aria-hidden
+                    alt="Blueprints for Pangaea"
                     width={936}
                     height={556}
-                    priority
                     className="hidden h-auto w-full max-w-[16rem] dark:block"
                   />
                 </>

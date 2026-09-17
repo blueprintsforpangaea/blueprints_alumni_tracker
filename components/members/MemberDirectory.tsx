@@ -158,7 +158,7 @@ export default function MemberDirectory({ profiles, careers = {} }: Props) {
                 className={cn(
                   'rounded-full px-3 py-1 text-xs font-medium transition-all duration-150',
                   status === opt
-                    ? 'bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
+                    ? 'brand-gradient text-primary-foreground shadow-[0_4px_12px_oklch(0.5_0.18_257/0.2)]'
                     : 'brand-chip text-muted-foreground hover:text-foreground'
                 )}
               >

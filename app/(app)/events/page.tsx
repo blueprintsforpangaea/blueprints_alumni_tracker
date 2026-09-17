@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic'
 function PageHeader() {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex size-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-primary-foreground shadow-[0_12px_24px_oklch(0.5_0.18_257/0.22)]">
+      <div className="flex size-10 items-center justify-center rounded-2xl brand-gradient text-primary-foreground shadow-[0_12px_24px_oklch(0.5_0.18_257/0.22)]">
         <Calendar className="size-4" />
       </div>
       <div>
