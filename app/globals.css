@@ -132,18 +132,18 @@
 
 /* ─── Dark Theme ────────────────────────────────────────────────────────────── */
 .dark {
-  --brand-ice: oklch(0.21 0.006 255);
-  --brand-bright: oklch(0.71 0.12 252);
-  --brand-ocean: oklch(0.64 0.09 252);
+  --brand-ice: oklch(0.23 0.04 262);
+  --brand-bright: oklch(0.72 0.13 258);
+  --brand-ocean: oklch(0.65 0.11 258);
   --brand-deep: oklch(0.95 0.005 255);
 
-  --background: oklch(0.16 0.01 255);
+  --background: oklch(0.18 0.042 262);
   --foreground: oklch(0.94 0.004 255);
 
-  --card: oklch(0.2 0.01 255);
+  --card: oklch(0.23 0.04 262);
   --card-foreground: oklch(0.94 0.004 255);
 
-  --popover: oklch(0.2 0.01 255);
+  --popover: oklch(0.23 0.04 262);
   --popover-foreground: oklch(0.94 0.004 255);
 
   /* Measured: the old oklch(0.68 0.14 252) put white labels at 2.80:1. Darkened
@@ -152,19 +152,19 @@
   --primary: oklch(0.56 0.16 252);
   --primary-foreground: oklch(0.99 0 0);
 
-  --secondary: oklch(0.25 0.01 255);
+  --secondary: oklch(0.27 0.042 262);
   --secondary-foreground: oklch(0.94 0.004 255);
 
-  --muted: oklch(0.24 0.008 255);
-  --muted-foreground: oklch(0.72 0.01 255);
+  --muted: oklch(0.26 0.038 262);
+  --muted-foreground: oklch(0.73 0.025 262);
 
-  --accent: oklch(0.24 0.01 255);
+  --accent: oklch(0.27 0.044 262);
   --accent-foreground: oklch(0.94 0.004 255);
 
   --destructive: oklch(0.704 0.191 22.216);
 
-  --border: oklch(0.3 0.008 255);
-  --input: oklch(0.3 0.008 255);
+  --border: oklch(0.33 0.038 262);
+  --input: oklch(0.33 0.038 262);
   --ring: oklch(0.68 0.14 252);
 
   --chart-1: oklch(0.68 0.12 252);
@@ -175,19 +175,19 @@
 
   /* Surfaces, dark. Tinted toward the logo's navy (oklch 0.20 0.095 262) rather
      than neutral grey, so panels read as brand rather than as slate. */
-  --surface-field: oklch(0.26 0.018 256 / 0.7);
-  --surface-raised: oklch(0.24 0.016 256 / 0.6);
-  --border-field: oklch(0.52 0.06 255 / 0.4);
-  --avatar-ring: oklch(0.34 0.02 256);
+  --surface-field: oklch(0.29 0.048 262 / 0.7);
+  --surface-raised: oklch(0.27 0.044 262 / 0.6);
+  --border-field: oklch(0.52 0.08 260 / 0.45);
+  --avatar-ring: oklch(0.36 0.05 262);
   --connector: oklch(0.58 0.07 250 / 0.9);
 
-  --sidebar: oklch(0.18 0.01 255 / 0.84);
+  --sidebar: oklch(0.21 0.045 262 / 0.84);
   --sidebar-foreground: oklch(0.94 0.004 255);
   --sidebar-primary: oklch(0.56 0.16 252);
   --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.24 0.01 255);
+  --sidebar-accent: oklch(0.27 0.044 262);
   --sidebar-accent-foreground: oklch(0.94 0.004 255);
-  --sidebar-border: oklch(0.3 0.008 255);
+  --sidebar-border: oklch(0.33 0.038 262);
   --sidebar-ring: oklch(0.68 0.14 252);
 }
 
@@ -215,8 +215,8 @@
      paint straight over the dark background. */
   .dark body {
     background:
-      radial-gradient(circle at top center, oklch(0.42 0.1 258 / 0.35) 0, transparent 42%),
-      linear-gradient(180deg, oklch(0.2 0.022 258) 0%, var(--background) 42%, oklch(0.14 0.014 258) 100%);
+      radial-gradient(circle at top center, oklch(0.44 0.13 262 / 0.4) 0, transparent 42%),
+      linear-gradient(180deg, oklch(0.23 0.06 262) 0%, var(--background) 42%, oklch(0.15 0.038 262) 100%);
     background-attachment: fixed;
   }
 }
@@ -298,7 +298,7 @@
     background-image: radial-gradient(circle at top, oklch(0.97 0.01 250) 0%, transparent 56%);
   }
   .dark .brand-grid {
-    background-image: radial-gradient(circle at top, oklch(0.26 0.03 258) 0%, transparent 56%);
+    background-image: radial-gradient(circle at top, oklch(0.29 0.06 262) 0%, transparent 56%);
   }
 
   .brand-rings {
