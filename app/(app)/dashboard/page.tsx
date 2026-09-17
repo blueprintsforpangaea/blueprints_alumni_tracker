@@ -1,4 +1,5 @@
-import { getAllProfiles } from '@/lib/notion'
+import { getAllProfiles, getAllWorkExperiences } from '@/lib/notion'
+import { buildCareerIndex } from '@/lib/careers'
 import MemberDirectory from '@/components/members/MemberDirectory'
 import { Badge } from '@/components/ui/badge'
 import { Users } from 'lucide-react'
@@ -7,7 +8,13 @@ export const metadata = { title: 'Members — Blueprints for Pangaea' }
 export const dynamic = 'force-dynamic'
 
 export default async function MembersPage() {
-  const profiles = await getAllProfiles()
+  // Work experience feeds people search — "who worked at Google" is a directory
+  // question, not just a careers-page one. Both reads are already cached.
+  const [profiles, experiences] = await Promise.all([
+    getAllProfiles(),
+    getAllWorkExperiences().catch(() => []),
+  ])
+  const careers = buildCareerIndex(experiences)
 
   return (
     <div className="space-y-6">
@@ -32,7 +39,7 @@ export default async function MembersPage() {
       </div>
 
       {/* Client-side filtering */}
-      <MemberDirectory profiles={profiles} />
+      <MemberDirectory profiles={profiles} careers={careers} />
     </div>
   )
 }

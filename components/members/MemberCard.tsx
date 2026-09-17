@@ -12,7 +12,13 @@ function getInitials(name: string): string {
     .toUpperCase()
 }
 
-export default function MemberCard({ profile }: { profile: Profile }) {
+export default function MemberCard({
+  profile,
+  matchReason = null,
+}: {
+  profile: Profile
+  matchReason?: string | null
+}) {
   const initials = getInitials(profile.full_name)
   const isAlumni = profile.status === 'Alumni'
 
@@ -66,6 +72,13 @@ export default function MemberCard({ profile }: { profile: Profile }) {
             <MapPin className="size-3 shrink-0" />
             <span className="truncate">{profile.location}</span>
           </div>
+        )}
+
+        {/* Why this person matched the search */}
+        {matchReason && (
+          <p className="line-clamp-2 rounded-lg bg-primary/5 px-2 py-1 text-[11px] leading-snug text-primary">
+            {matchReason}
+          </p>
         )}
 
         {/* Tags row */}

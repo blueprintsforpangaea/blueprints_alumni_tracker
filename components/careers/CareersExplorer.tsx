@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import type { CompanyGroup } from '@/app/(app)/careers/page'
+import type { CompanyGroup, RankedCount } from '@/lib/careers'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -18,12 +18,13 @@ import {
   Users,
   Briefcase,
   BarChart3,
+  MessageSquare,
 } from 'lucide-react'
 
 type Stats = {
-  topCompanies: { name: string; count: number }[]
-  topIndustries: { name: string; count: number }[]
-  topRoles: { name: string; count: number }[]
+  topCompanies: RankedCount[]
+  topIndustries: RankedCount[]
+  topRoles: RankedCount[]
 }
 
 type Props = {
@@ -53,10 +54,18 @@ export default function CareersExplorer({
         })
         if (matchingExps.length === 0) return null
 
+        // Recount people (not rows) over whatever survived the filters.
+        const statusByMember = new Map(
+          matchingExps.map((e) => [e.member_id, e.member_status])
+        )
+        const statuses = [...statusByMember.values()]
+
         return {
           ...group,
           experiences: matchingExps,
-          uniqueMembers: new Set(matchingExps.map((e) => e.profile_id)).size,
+          uniqueMembers: statusByMember.size,
+          alumniCount: statuses.filter((s) => s === 'Alumni').length,
+          currentCount: statuses.filter((s) => s === 'Current Member').length,
         }
       })
       .filter((g): g is CompanyGroup => {
@@ -223,6 +232,19 @@ function CompanyCard({ group }: { group: CompanyGroup }) {
                 <Users className="size-3" />
                 {group.uniqueMembers} member{group.uniqueMembers !== 1 ? 's' : ''}
               </span>
+              {(group.alumniCount > 0 || group.currentCount > 0) && (
+                <>
+                  <span>·</span>
+                  <span>
+                    {[
+                      group.alumniCount > 0 && `${group.alumniCount} alumni`,
+                      group.currentCount > 0 && `${group.currentCount} current`,
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </span>
+                </>
+              )}
               <span>·</span>
               <span>{group.experiences.length} role{group.experiences.length !== 1 ? 's' : ''}</span>
             </div>
@@ -272,10 +294,27 @@ function CompanyCard({ group }: { group: CompanyGroup }) {
                 )}
               </div>
               <p className="text-xs text-muted-foreground truncate">{exp.role}</p>
+              {exp.description && (
+                <p className="mt-0.5 text-[11px] leading-relaxed text-muted-foreground/80 line-clamp-2">
+                  {exp.description}
+                </p>
+              )}
             </div>
 
             {/* Meta */}
             <div className="flex items-center gap-1.5 shrink-0">
+              {exp.member_linkedin && (
+                <a
+                  href={exp.member_linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  title={`Ask ${exp.member_name} about ${group.company}`}
+                >
+                  <MessageSquare className="size-3" />
+                  <span className="hidden sm:inline">Ask</span>
+                </a>
+              )}
               {exp.is_current && (
                 <Badge variant="default" className="text-[10px]">Current</Badge>
               )}
