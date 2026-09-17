@@ -110,6 +110,19 @@
 
   --radius: 1.25rem;
 
+  /* Semantic surfaces. Components used to hardcode `bg-white/60`, a blue-tinted
+     border literal and `ring-white`; those have no dark equivalent, so they are
+     defined once here and themed per mode. */
+  --surface-field: oklch(1 0 0 / 0.6);
+  --surface-raised: oklch(1 0 0 / 0.7);
+  --border-field: oklch(0.8 0.05 252 / 0.45);
+  --avatar-ring: oklch(1 0 0);
+  /* Lineage lines on the Connections page. */
+  --connector: oklch(0.76 0.05 245 / 0.85);
+  /* The logo is a transparent PNG whose globe grid lines are knockouts and whose
+     ink is navy, so it needs a light plate to stay readable on a dark surface. */
+  --logo-plate: oklch(1 0 0 / 0.6);
+
   --sidebar: oklch(0.99 0.001 255 / 0.82);
   --sidebar-foreground: oklch(0.23 0.015 255);
   --sidebar-primary: oklch(0.58 0.17 255);
@@ -136,7 +149,10 @@
   --popover: oklch(0.2 0.01 255);
   --popover-foreground: oklch(0.94 0.004 255);
 
-  --primary: oklch(0.68 0.14 252);
+  /* Measured: the old oklch(0.68 0.14 252) put white labels at 2.80:1. Darkened
+     until the pair clears WCAG AA (4.5:1) — hue is unchanged so the mode still
+     matches the light palette. See lib/theme.check.ts. */
+  --primary: oklch(0.56 0.16 252);
   --primary-foreground: oklch(0.99 0 0);
 
   --secondary: oklch(0.25 0.01 255);
@@ -160,9 +176,20 @@
   --chart-4: oklch(0.35 0.01 255);
   --chart-5: oklch(0.28 0.01 255);
 
+  /* Surfaces, dark. Tinted toward the logo's navy (oklch 0.20 0.095 262) rather
+     than neutral grey, so panels read as brand rather than as slate. */
+  --surface-field: oklch(0.26 0.018 256 / 0.7);
+  --surface-raised: oklch(0.24 0.016 256 / 0.6);
+  --border-field: oklch(0.52 0.06 255 / 0.4);
+  --avatar-ring: oklch(0.34 0.02 256);
+  --connector: oklch(0.58 0.07 250 / 0.9);
+  /* Near-white plate keeps the navy logo ink and its knocked-out grid lines
+     legible. Slightly warm-free white so it doesn't glare. */
+  --logo-plate: oklch(0.96 0.006 255 / 0.94);
+
   --sidebar: oklch(0.18 0.01 255 / 0.84);
   --sidebar-foreground: oklch(0.94 0.004 255);
-  --sidebar-primary: oklch(0.68 0.14 252);
+  --sidebar-primary: oklch(0.56 0.16 252);
   --sidebar-primary-foreground: oklch(0.99 0 0);
   --sidebar-accent: oklch(0.24 0.01 255);
   --sidebar-accent-foreground: oklch(0.94 0.004 255);
@@ -188,6 +215,15 @@
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  /* Same shape as light, inverted: a faint brand glow at the top over a deep
+     navy-tinted field. Without this the hardcoded light gradient above would
+     paint straight over the dark background. */
+  .dark body {
+    background:
+      radial-gradient(circle at top center, oklch(0.42 0.1 258 / 0.35) 0, transparent 42%),
+      linear-gradient(180deg, oklch(0.2 0.022 258) 0%, var(--background) 42%, oklch(0.14 0.014 258) 100%);
+    background-attachment: fixed;
   }
 }
 
@@ -267,10 +303,17 @@
   .brand-grid {
     background-image: radial-gradient(circle at top, oklch(0.97 0.01 250) 0%, transparent 56%);
   }
+  .dark .brand-grid {
+    background-image: radial-gradient(circle at top, oklch(0.26 0.03 258) 0%, transparent 56%);
+  }
 
   .brand-rings {
     background:
       radial-gradient(circle at center, transparent 0 42%, oklch(0.58 0.1 252 / 0.08) 43%, transparent 56%, oklch(0.58 0.1 252 / 0.05) 57%, transparent 70%);
+  }
+  .dark .brand-rings {
+    background:
+      radial-gradient(circle at center, transparent 0 42%, oklch(0.72 0.12 255 / 0.14) 43%, transparent 56%, oklch(0.72 0.12 255 / 0.09) 57%, transparent 70%);
   }
 
   .brand-chip {
@@ -280,12 +323,44 @@
       0 1px 2px oklch(0.23 0.015 255 / 0.04),
       inset 0 1px 0 oklch(1 0 0 / 0.85);
   }
+  .dark .brand-chip {
+    background: oklch(0.26 0.018 256 / 0.75);
+    border-color: oklch(0.36 0.014 256 / 0.9);
+    box-shadow:
+      0 1px 2px oklch(0.05 0.01 255 / 0.3),
+      inset 0 1px 0 oklch(1 0 0 / 0.05);
+  }
+
+  /* Surfaces that used to be `bg-white/60` and `bg-white/70` literals. */
+  .brand-field {
+    background: var(--surface-field);
+    border-color: var(--border-field);
+  }
+
+  .brand-surface {
+    background: var(--surface-raised);
+  }
+
+  .avatar-ring {
+    --tw-ring-color: var(--avatar-ring);
+    border-color: var(--avatar-ring);
+  }
+
+  /* A light plate behind the logo. The PNG's grid lines are transparent
+     knockouts and its ink is navy, so on a dark panel it would read as solid
+     blobs with invisible seams. */
+  .logo-plate {
+    background: var(--logo-plate);
+  }
 
   .text-brand-gradient {
     background-image: linear-gradient(180deg, oklch(0.3 0.015 255), var(--color-brand-ocean));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+  .dark .text-brand-gradient {
+    background-image: linear-gradient(180deg, oklch(0.97 0.006 255), var(--color-brand-bright));
   }
 
   .card-hover {
@@ -296,6 +371,13 @@
     box-shadow:
       0 18px 36px oklch(0.23 0.015 255 / 0.09),
       0 3px 8px oklch(0.23 0.015 255 / 0.05);
+  }
+  /* Shadows barely read on a dark field, so lift with a brand-tinted rim too. */
+  .dark .card-hover:hover {
+    box-shadow:
+      0 18px 36px oklch(0.05 0.01 255 / 0.4),
+      0 3px 8px oklch(0.05 0.01 255 / 0.28),
+      inset 0 0 0 1px oklch(0.7 0.12 255 / 0.18);
   }
 
   .skeleton-shimmer {

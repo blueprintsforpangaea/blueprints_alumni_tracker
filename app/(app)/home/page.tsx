@@ -60,7 +60,7 @@ export default function HomePage() {
   return (
     <div className="space-y-10">
       <section className="relative overflow-hidden rounded-[2.5rem] px-6 py-8 animate-fade-up sm:px-8 sm:py-10">
-        <div className="absolute inset-0 rounded-[2.5rem] bg-[radial-gradient(circle_at_top,oklch(0.985_0.012_245),transparent_60%)]" />
+        <div className="absolute inset-0 rounded-[2.5rem] bg-[radial-gradient(circle_at_top,oklch(0.985_0.012_245),transparent_60%)] dark:bg-[radial-gradient(circle_at_top,oklch(0.27_0.035_258),transparent_60%)]" />
 
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_360px] lg:items-center">
           <div className="space-y-7">
@@ -133,7 +133,7 @@ export default function HomePage() {
               {HERO_PILLARS.map(({ icon: Icon, title, copy }) => (
                 <div
                   key={title}
-                  className="rounded-[1.75rem] border border-border bg-white/70 p-5 shadow-[0_16px_30px_oklch(0.23_0.015_255/0.06)] backdrop-blur"
+                  className="rounded-[1.75rem] border border-border brand-surface p-5 shadow-[0_16px_30px_oklch(0.23_0.015_255/0.06)] backdrop-blur"
                 >
                   <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <Icon className="size-4" />
@@ -151,16 +151,18 @@ export default function HomePage() {
 
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="brand-panel relative w-full max-w-sm overflow-hidden rounded-[2.25rem] p-8">
-              <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,oklch(0.98_0.015_245),transparent_72%)]" />
+              <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,oklch(0.98_0.015_245),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,oklch(0.3_0.04_258),transparent_72%)]" />
               <div className="relative flex flex-col items-center gap-6">
-                <Image
-                  src="/brand/blueprints-logo.png"
-                  alt="Blueprints for Pangaea"
-                  width={936}
-                  height={556}
-                  priority
-                  className="h-auto w-full max-w-[16rem]"
-                />
+                <div className="logo-plate rounded-[1.5rem] px-5 py-4">
+                  <Image
+                    src="/brand/blueprints-logo.png"
+                    alt="Blueprints for Pangaea"
+                    width={936}
+                    height={556}
+                    priority
+                    className="h-auto w-full max-w-[16rem]"
+                  />
+                </div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {["Directory", "Events", "Org Needs", "Ideas"].map(
                     (label) => (

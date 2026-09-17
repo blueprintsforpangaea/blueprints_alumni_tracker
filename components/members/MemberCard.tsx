@@ -34,7 +34,7 @@ export default function MemberCard({
             height={64}
             loading="lazy"
             decoding="async"
-            className="size-16 rounded-full object-cover ring-2 ring-white shadow-[0_4px_12px_oklch(0.22_0.07_257/0.12)]"
+            className="size-16 rounded-full object-cover ring-2 avatar-ring shadow-[0_4px_12px_oklch(0.22_0.07_257/0.12)]"
           />
         ) : (
           <div className="flex size-16 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-lg font-semibold text-primary-foreground shadow-[0_8px_20px_oklch(0.5_0.18_257/0.2)]">

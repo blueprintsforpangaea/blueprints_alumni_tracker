@@ -101,7 +101,7 @@ export default function EventsExplorer({ events, currentMonth }: Props) {
           <div className="flex-1" />
 
           {/* View toggle */}
-          <div className="flex items-center gap-1 rounded-xl bg-white/60 p-0.5 ring-1 ring-border">
+          <div className="flex items-center gap-1 rounded-xl brand-surface p-0.5 ring-1 ring-border">
             <button
               onClick={() => setView('calendar')}
               className={cn(

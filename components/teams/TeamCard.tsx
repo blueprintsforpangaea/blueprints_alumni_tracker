@@ -66,7 +66,7 @@ export default function TeamCard({
       </header>
 
       {/* Members */}
-      <section className="space-y-3 rounded-[1.5rem] border border-border/70 bg-white/70 p-4 shadow-[0_10px_26px_oklch(0.22_0.02_255/0.05)]">
+      <section className="space-y-3 rounded-[1.5rem] border border-border/70 brand-surface p-4 shadow-[0_10px_26px_oklch(0.22_0.02_255/0.05)]">
         <div className="flex items-center justify-between">
           <h3 className="text-[11px] font-semibold tracking-[0.08em] text-foreground/75 uppercase">
             Members

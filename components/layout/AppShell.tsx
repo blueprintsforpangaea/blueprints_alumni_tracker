@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "./ThemeToggle";
 import {
   Home,
   Users,
@@ -161,7 +162,7 @@ export default function AppShell({
               >
                 <X className="size-4" />
               </button>
-              <div className="flex items-center justify-center rounded-[1.5rem] bg-white/60 p-4">
+              <div className="logo-plate flex items-center justify-center rounded-[1.5rem] p-4">
                 <Image
                   src="/brand/blueprints-logo.png"
                   alt="Blueprints for Pangaea"
@@ -204,7 +205,7 @@ export default function AppShell({
                 className={cn(
                   "group relative flex h-11 items-center gap-3 rounded-2xl px-4 text-[15px] font-medium transition-all duration-150",
                   active
-                    ? "bg-primary/10 text-foreground shadow-[inset_0_0_0_1px_oklch(0.58_0.06_255/0.14)]"
+                    ? "bg-primary/10 text-foreground shadow-[inset_0_0_0_1px_oklch(0.58_0.06_255/0.14)] dark:shadow-[inset_0_0_0_1px_oklch(0.72_0.1_255/0.28)]"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
@@ -243,7 +244,7 @@ export default function AppShell({
                 rel="noopener noreferrer"
                 className={cn(
                   "group relative flex h-11 items-center gap-3 rounded-2xl px-4 text-[15px] font-medium transition-all duration-150",
-                  "bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.08),oklch(0.64_0.16_252/0.06))] text-[oklch(0.44_0.10_252)] hover:bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.14),oklch(0.64_0.16_252/0.10))] hover:text-[oklch(0.34_0.10_252)]",
+                  "bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.08),oklch(0.64_0.16_252/0.06))] text-[var(--color-brand-ocean)] hover:bg-[linear-gradient(135deg,oklch(0.54_0.12_252/0.14),oklch(0.64_0.16_252/0.10))] hover:text-[var(--color-brand-bright)]",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
               >
@@ -284,7 +285,7 @@ export default function AppShell({
                 className={cn(
                   "group flex h-11 items-center gap-3 rounded-2xl px-4 text-[15px] font-medium transition-all duration-150",
                   pathname === "/admin"
-                    ? "bg-primary/10 text-foreground shadow-[inset_0_0_0_1px_oklch(0.58_0.06_255/0.14)]"
+                    ? "bg-primary/10 text-foreground shadow-[inset_0_0_0_1px_oklch(0.58_0.06_255/0.14)] dark:shadow-[inset_0_0_0_1px_oklch(0.72_0.1_255/0.28)]"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
@@ -324,7 +325,7 @@ export default function AppShell({
       {/* ── Main Area ────────────────────────────────────────────────────── */}
       <div className="flex flex-1 flex-col min-w-0">
         {/* Top Navigation */}
-        <header className="glass sticky top-0 z-30 flex min-h-16 shrink-0 items-center justify-between border-b border-white/60 px-4 py-3 lg:px-8">
+        <header className="glass sticky top-0 z-30 flex min-h-16 shrink-0 items-center justify-between border-b border-border/60 px-4 py-3 lg:px-8">
           <div className="flex min-w-0 items-center gap-3">
             {/* Mobile menu */}
             <button
@@ -350,6 +351,7 @@ export default function AppShell({
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <UserButton
               appearance={{
                 elements: {
@@ -370,7 +372,7 @@ export default function AppShell({
 
         {/* Page Content */}
         <main className="relative flex-1 overflow-y-auto">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(circle_at_top,oklch(0.98_0.02_250/0.85),transparent_62%)]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(circle_at_top,oklch(0.98_0.02_250/0.85),transparent_62%)] dark:bg-[radial-gradient(circle_at_top,oklch(0.42_0.1_258/0.3),transparent_62%)]" />
           <div className="relative mx-auto w-full max-w-7xl px-4 py-6 lg:px-8 lg:py-10">
             {children}
           </div>

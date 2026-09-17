@@ -17,14 +17,14 @@ function MemberChip({ profile }: { profile: Profile }) {
   return (
     <Link
       href={`/profile/${profile.id}`}
-      className="group flex items-center gap-2 rounded-full border border-border/70 bg-white/70 py-1 pr-3 pl-1 text-xs text-foreground transition-all hover:border-primary/30 hover:bg-primary/5"
+      className="group flex items-center gap-2 rounded-full border border-border/70 brand-surface py-1 pr-3 pl-1 text-xs text-foreground transition-all hover:border-primary/30 hover:bg-primary/5"
     >
       {profile.avatar_url ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={profile.avatar_url}
           alt={profile.full_name}
-          className="size-6 rounded-full object-cover ring-1 ring-white"
+          className="size-6 rounded-full object-cover ring-1 avatar-ring"
         />
       ) : (
         <span className="flex size-6 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-brand-ocean),var(--color-brand-bright))] text-[10px] font-semibold text-primary-foreground">

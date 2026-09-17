@@ -66,7 +66,7 @@ export default function ConnectionsExplorer({
     return (
       <div className="space-y-6">
         <SearchBar query={query} setQuery={setQuery} />
-        <div className="rounded-[2rem] border border-white/50 bg-white/72 px-8 py-16 text-center shadow-[0_20px_60px_oklch(0.22_0.02_255/0.08)] backdrop-blur-md">
+        <div className="rounded-[2rem] brand-field border px-8 py-16 text-center shadow-[0_20px_60px_oklch(0.22_0.02_255/0.08)] backdrop-blur-md">
           <p className="text-base font-semibold text-foreground">No family trees yet.</p>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             Once members add their big in Edit Profile, their family cards will appear here.
@@ -87,7 +87,7 @@ export default function ConnectionsExplorer({
       <SearchBar query={query} setQuery={setQuery} />
 
       {filteredFamilies.length === 0 && filteredUnlinkedProfiles.length === 0 ? (
-        <div className="rounded-[2rem] border border-white/50 bg-white/72 px-8 py-16 text-center shadow-[0_20px_60px_oklch(0.22_0.02_255/0.08)] backdrop-blur-md">
+        <div className="rounded-[2rem] brand-field border px-8 py-16 text-center shadow-[0_20px_60px_oklch(0.22_0.02_255/0.08)] backdrop-blur-md">
           <p className="text-base font-semibold text-foreground">No family trees match that search.</p>
           <p className="mt-2 text-sm text-muted-foreground">
             Try a different member name, role, major, or family title.
@@ -187,7 +187,7 @@ export default function ConnectionsExplorer({
                 {filteredUnlinkedProfiles.map((profile) => (
                   <div
                     key={profile.id}
-                    className="rounded-[1.5rem] border border-white/50 bg-white/72 p-4 shadow-[0_12px_34px_oklch(0.22_0.02_255/0.06)] backdrop-blur-md"
+                    className="rounded-[1.5rem] brand-field border p-4 shadow-[0_12px_34px_oklch(0.22_0.02_255/0.06)] backdrop-blur-md"
                   >
                     <div className="flex items-center gap-3">
                       <AvatarLink profile={profile} size="sm" />
@@ -228,7 +228,7 @@ function SearchBar({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search by name..."
-        className="h-11 rounded-2xl border-[oklch(0.8_0.05_252/0.35)] bg-white/72 pl-10 text-sm shadow-[0_12px_28px_oklch(0.23_0.015_255/0.05)]"
+        className="h-11 rounded-2xl brand-field pl-10 text-sm shadow-[0_12px_28px_oklch(0.23_0.015_255/0.05)]"
       />
     </div>
   )
@@ -333,7 +333,8 @@ function GenerationRow({
   childrenById: Map<string, Profile[]>
 }) {
   const connectorWidth = Math.min(92, 24 + level.length * 18)
-  const connectorColor = 'oklch(0.76 0.05 245 / 0.85)'
+  // Themed so the lineage lines stay visible in both modes.
+  const connectorColor = 'var(--connector)'
 
   return (
     <div className="space-y-3">
@@ -386,7 +387,7 @@ function PersonNode({
     <div className="relative flex flex-col items-center pb-4">
       <div
         className={cn(
-          'w-[8.8rem] rounded-[1.15rem] border border-[oklch(0.88_0.02_252/0.7)] bg-white/86 px-3 py-3 text-center shadow-[0_10px_24px_oklch(0.23_0.015_255/0.05)]',
+          'w-[8.8rem] rounded-[1.15rem] brand-field border px-3 py-3 text-center shadow-[0_10px_24px_oklch(0.23_0.015_255/0.05)]',
           isRoot && 'w-[9.5rem] py-4'
         )}
       >
@@ -405,7 +406,7 @@ function PersonNode({
       </div>
 
       {hasChildren && (
-        <span className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[oklch(0.76_0.05_245/0.85)]" />
+        <span className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[var(--connector)]" />
       )}
     </div>
   )
@@ -429,7 +430,7 @@ function AvatarLink({
           alt={profile.full_name}
           className={cn(
             dimensionClass,
-            'rounded-full object-cover ring-2 ring-[oklch(0.94_0.01_255)] transition-transform hover:scale-[1.03]'
+            'rounded-full object-cover ring-2 ring-[var(--avatar-ring)] transition-transform hover:scale-[1.03]'
           )}
         />
       </Link>

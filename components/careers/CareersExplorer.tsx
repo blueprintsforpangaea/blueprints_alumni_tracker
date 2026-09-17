@@ -116,7 +116,7 @@ export default function CareersExplorer({
               placeholder="Search companies, roles, or members..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 h-8 bg-white/60 border-[oklch(0.8_0.05_252/0.45)]"
+              className="pl-8 h-8 brand-field"
             />
           </div>
 
@@ -144,7 +144,7 @@ export default function CareersExplorer({
               value={industryFilter}
               onChange={(e) => setIndustryFilter(e.target.value)}
               className={cn(
-                'h-8 rounded-xl border border-[oklch(0.8_0.05_252/0.45)] bg-white/60 px-2.5 text-xs font-medium transition-colors outline-none',
+                'h-8 rounded-xl brand-field border px-2.5 text-xs font-medium transition-colors outline-none',
                 'focus:border-ring focus:ring-2 focus:ring-ring/20',
                 industryFilter ? 'text-foreground' : 'text-muted-foreground'
               )}
