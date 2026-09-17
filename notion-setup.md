@@ -27,7 +27,18 @@ Create these as full-page databases in Notion. The property names must match exa
 | `role_title`    | Text     | e.g. VP of Engineering       |
 | `status`        | Select   | `Current Member`, `Alumni`   |
 | `team`          | Multi-select | Options must match the 7 teams in `lib/teams.ts`: `Operations`, `Technology`, `Development`, `Expansion`, `Finance`, `Internal`, `New Analysts`. Members can be on multiple. |
+| `chapter_role`  | Text     | e.g. President, Analyst      |
+| `location`      | Text     | Where they are now           |
+| `hometown`      | Text     | Searchable in the directory  |
+| `fun_fact`      | Text     |                              |
+| `contact_email` | Text     | Only shown when `open_to_chat` is checked |
+| `skills`        | Multi-select | Searchable                |
+| `hobbies`       | Multi-select | Searchable                |
+| `current_classes` | Multi-select | Searchable — members use it to find classmates |
+| `open_to_chat`  | Checkbox | Default: unchecked. Opt-in; reveals `contact_email` to signed-in members |
 | `linkedin_url`  | URL      |                              |
+| `github_url`    | URL      |                              |
+| `instagram_url` | URL      |                              |
 | `avatar_url`    | URL      |                              |
 | `banner_url`    | URL      | Profile header image         |
 | `big`           | Relation | Self-relation to Profiles DB |

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Profile } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, Briefcase } from 'lucide-react'
+import { MapPin, Briefcase, MessageSquare } from 'lucide-react'
 
 function getInitials(name: string): string {
   return name
@@ -94,6 +94,12 @@ export default function MemberCard({
           {profile.major && (
             <Badge variant="outline" className="text-[10px]">
               {profile.major}
+            </Badge>
+          )}
+          {profile.open_to_chat && (
+            <Badge variant="default" className="gap-1 text-[10px]">
+              <MessageSquare className="size-2.5" />
+              Open to chat
             </Badge>
           )}
         </div>

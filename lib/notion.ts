@@ -144,6 +144,7 @@ export function pageToProfile(page: PageObjectResponse): Profile {
     big_id: getFirstRelationId(page, ['big', 'Big']),
     family_tree_id: getFirstRelationId(page, ['family_tree', 'Family Tree']),
     fun_fact: getText(page, 'fun_fact') || null,
+    open_to_chat: getBool(page, 'open_to_chat'),
   }
 }
 
@@ -286,6 +287,15 @@ async function getProfilesBigRelationProperty(): Promise<string | null> {
   return null
 }
 
+// Notion rejects the entire page update if it names a property the database
+// doesn't have. Several profile fields are optional in a given workspace, so
+// unknown ones are dropped instead of failing the whole save.
+async function getProfilesPropertyNames(): Promise<Set<string>> {
+  const database = await notion.databases.retrieve({ database_id: PROFILES_DB })
+  const properties = (database as { properties?: Record<string, unknown> }).properties ?? {}
+  return new Set(Object.keys(properties))
+}
+
 async function getProfilesTeamPropertyType(): Promise<'select' | 'multi_select'> {
   const database = await notion.databases.retrieve({ database_id: PROFILES_DB })
   const properties =
@@ -405,6 +415,14 @@ export async function updateProfile(
     skills?: string[]
     big_id?: string | null
     fun_fact?: string | null
+    hometown?: string | null
+    chapter_role?: string | null
+    github_url?: string | null
+    instagram_url?: string | null
+    contact_email?: string | null
+    hobbies?: string[]
+    current_classes?: string[]
+    open_to_chat?: boolean
   }
 ): Promise<void> {
   if (data.big_id === profileId) {
@@ -439,6 +457,32 @@ export async function updateProfile(
   }
   if (data.fun_fact !== undefined) {
     properties.fun_fact = { rich_text: [{ text: { content: data.fun_fact ?? '' } }] }
+  }
+  if (data.hometown !== undefined) {
+    properties.hometown = { rich_text: [{ text: { content: data.hometown ?? '' } }] }
+  }
+  if (data.chapter_role !== undefined) {
+    properties.chapter_role = { rich_text: [{ text: { content: data.chapter_role ?? '' } }] }
+  }
+  if (data.contact_email !== undefined) {
+    properties.contact_email = { rich_text: [{ text: { content: data.contact_email ?? '' } }] }
+  }
+  if (data.github_url !== undefined) {
+    properties.github_url = { url: data.github_url }
+  }
+  if (data.instagram_url !== undefined) {
+    properties.instagram_url = { url: data.instagram_url }
+  }
+  if (data.hobbies !== undefined) {
+    properties.hobbies = { multi_select: data.hobbies.map((h) => ({ name: h })) }
+  }
+  if (data.current_classes !== undefined) {
+    properties.current_classes = {
+      multi_select: data.current_classes.map((c) => ({ name: c })),
+    }
+  }
+  if (data.open_to_chat !== undefined) {
+    properties.open_to_chat = { checkbox: data.open_to_chat }
   }
   if (data.status !== undefined) {
     properties.status = data.status ? { select: { name: data.status } } : { select: null }
@@ -480,7 +524,12 @@ export async function updateProfile(
     }
   }
 
-  await notion.pages.update({ page_id: profileId, properties })
+  const known = await getProfilesPropertyNames()
+  const supported = Object.fromEntries(
+    Object.entries(properties).filter(([name]) => known.has(name))
+  )
+
+  await notion.pages.update({ page_id: profileId, properties: supported })
   revalidateTag(CACHE_TAGS.profiles, { expire: 0 })
 }
 

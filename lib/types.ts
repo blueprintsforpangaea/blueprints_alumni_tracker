@@ -29,6 +29,8 @@ export type Profile = {
   big_id: string | null
   family_tree_id: string | null
   fun_fact: string | null
+  /** Opt-in. When true, this member's contact_email is visible to signed-in members. */
+  open_to_chat: boolean
 }
 
 export type FamilyTree = {

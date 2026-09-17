@@ -46,6 +46,14 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
   const [skillsRaw, setSkillsRaw] = useState(profile.skills.join(', '))
   const [bigId, setBigId] = useState(profile.big_id ?? '')
   const [funFact, setFunFact] = useState(profile.fun_fact ?? '')
+  const [hometown, setHometown] = useState(profile.hometown ?? '')
+  const [chapterRole, setChapterRole] = useState(profile.chapter_role ?? '')
+  const [hobbiesRaw, setHobbiesRaw] = useState(profile.hobbies.join(', '))
+  const [classesRaw, setClassesRaw] = useState(profile.current_classes.join(', '))
+  const [github, setGithub] = useState(profile.github_url ?? '')
+  const [instagram, setInstagram] = useState(profile.instagram_url ?? '')
+  const [contactEmail, setContactEmail] = useState(profile.contact_email ?? '')
+  const [openToChat, setOpenToChat] = useState(profile.open_to_chat)
 
   const [internshipList, setInternshipList] = useState<InternshipDraft[]>(
     internships.map(({ id, profile_id, ...rest }) => ({ id, ...rest }))
@@ -113,10 +121,13 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
     setSaving(true)
     setError(null)
 
-    const skills = skillsRaw
-      .split(',')
-      .map((s) => s.trim())
-      .filter(Boolean)
+    const splitList = (raw: string) =>
+      raw
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+
+    const skills = splitList(skillsRaw)
     const normalizedInternships = internshipList.map((item) => ({
       ...item,
       company_website: normalizeUrlInput(item.company_website),
@@ -142,6 +153,14 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
             skills,
             big_id: bigId || null,
             fun_fact: funFact || null,
+            hometown: hometown || null,
+            chapter_role: chapterRole || null,
+            hobbies: splitList(hobbiesRaw),
+            current_classes: splitList(classesRaw),
+            github_url: normalizeUrlInput(github),
+            instagram_url: normalizeUrlInput(instagram),
+            contact_email: contactEmail || null,
+            open_to_chat: openToChat,
           },
           internships: normalizedInternships,
           clubs: clubList,
@@ -312,6 +331,50 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="hobbies">Hobbies</Label>
+          <Input
+            id="hobbies"
+            value={hobbiesRaw}
+            onChange={(e) => setHobbiesRaw(e.target.value)}
+            placeholder="Comma-separated, e.g. Climbing, Film photography"
+          />
+          <p className="text-[11px] text-muted-foreground">Separate with commas</p>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="current_classes">Current Classes</Label>
+          <Input
+            id="current_classes"
+            value={classesRaw}
+            onChange={(e) => setClassesRaw(e.target.value)}
+            placeholder="Comma-separated, e.g. EECS 281, ECON 401"
+          />
+          <p className="text-[11px] text-muted-foreground">
+            Separate with commas. Members search these to find classmates.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="hometown">Hometown</Label>
+          <Input
+            id="hometown"
+            value={hometown}
+            onChange={(e) => setHometown(e.target.value)}
+            placeholder="e.g. Chicago, IL"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="chapter_role">Chapter Role</Label>
+          <Input
+            id="chapter_role"
+            value={chapterRole}
+            onChange={(e) => setChapterRole(e.target.value)}
+            placeholder="e.g. President, Analyst"
+          />
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="big_id">Big / Mentor</Label>
           <select
             id="big_id"
@@ -363,6 +426,63 @@ export default function ProfileForm({ profile, allProfiles, internships, clubs, 
             placeholder="https://linkedin.com/in/yourname"
           />
         </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="github">GitHub URL</Label>
+          <Input
+            id="github"
+            type="url"
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+            placeholder="https://github.com/yourname"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="instagram">Instagram URL</Label>
+          <Input
+            id="instagram"
+            type="url"
+            value={instagram}
+            onChange={(e) => setInstagram(e.target.value)}
+            placeholder="https://instagram.com/yourname"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="contact_email">Contact Email</Label>
+          <Input
+            id="contact_email"
+            type="email"
+            value={contactEmail}
+            onChange={(e) => setContactEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
+          <p className="text-[11px] text-muted-foreground">
+            Hidden from everyone unless you turn on &ldquo;open to chat&rdquo; below.
+          </p>
+        </div>
+
+        <label
+          htmlFor="open_to_chat"
+          className="flex cursor-pointer items-start gap-3 rounded-xl border border-input p-3"
+        >
+          <input
+            id="open_to_chat"
+            type="checkbox"
+            checked={openToChat}
+            onChange={(e) => setOpenToChat(e.target.checked)}
+            className="mt-0.5 size-4"
+          />
+          <span className="space-y-1">
+            <span className="block text-sm font-medium">Open to chat</span>
+            <span className="block text-[11px] text-muted-foreground">
+              Show an &ldquo;open to chat&rdquo; badge on your profile and let signed-in members
+              see your contact email. Members looking for someone who took your career path
+              will reach out. Off by default.
+            </span>
+          </span>
+        </label>
       </section>
 
       {/* Work Experience */}

@@ -21,6 +21,9 @@ import {
   Pencil,
   ArrowLeft,
   Sparkles,
+  Github,
+  Mail,
+  MessageSquare,
 } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
@@ -42,6 +45,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
   const isAdmin = viewer?.is_admin ?? false
   const canEdit = isOwner || isAdmin
   const isAlumni = profile.status === 'Alumni'
+  // Email is opt-in. Owners and admins always see it so it stays editable.
+  const contactEmail = profile.open_to_chat || canEdit ? profile.contact_email : null
 
   return (
     <div className="mx-auto max-w-3xl space-y-6 animate-fade-up">
@@ -125,22 +130,20 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
               )}
             </div>
 
-            {/* Skills */}
-            {profile.skills.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {profile.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="brand-chip rounded-full px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-brand-deep)]"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+            {/* Skills, hobbies, classes */}
+            <ChipRow label="Skills" items={profile.skills} />
+            <ChipRow label="Hobbies" items={profile.hobbies} />
+            <ChipRow label="Classes" items={profile.current_classes} />
+
+            {profile.open_to_chat && (
+              <Badge variant="default" className="gap-1 text-xs">
+                <MessageSquare className="size-3" />
+                Open to chat
+              </Badge>
             )}
 
             {/* Contact links */}
-            {(profile.phone_number || profile.linkedin_url) && (
+            {(profile.phone_number || profile.linkedin_url || profile.github_url || contactEmail) && (
               <div className="flex flex-col items-start gap-2">
                 {profile.phone_number && (
                   <div className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
@@ -157,6 +160,26 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                   >
                     <Linkedin className="size-3.5" />
                     LinkedIn Profile
+                  </a>
+                )}
+                {profile.github_url && (
+                  <a
+                    href={profile.github_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                  >
+                    <Github className="size-3.5" />
+                    GitHub
+                  </a>
+                )}
+                {contactEmail && (
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                  >
+                    <Mail className="size-3.5" />
+                    {contactEmail}
                   </a>
                 )}
               </div>
@@ -218,7 +241,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 value={profile.team.join(', ')}
               />
             )}
+            {profile.chapter_role && (
+              <InfoRow label="Chapter Role" value={profile.chapter_role} />
+            )}
             {profile.location && <InfoRow label="Location" value={profile.location} />}
+            {profile.hometown && <InfoRow label="Hometown" value={profile.hometown} />}
           </div>
         </div>
       </div>
@@ -242,6 +269,26 @@ function Section({
         {title}
       </h2>
       {children}
+    </div>
+  )
+}
+
+function ChipRow({ label, items }: { label: string; items: string[] }) {
+  if (items.length === 0) return null
+
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+        {label}
+      </span>
+      {items.map((item) => (
+        <span
+          key={item}
+          className="brand-chip rounded-full px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-brand-deep)]"
+        >
+          {item}
+        </span>
+      ))}
     </div>
   )
 }
