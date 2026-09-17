@@ -230,6 +230,34 @@ export async function getCalendarEvents(
   return events
 }
 
+/**
+ * Fetches one event by id. The roster API uses this so the event title and date
+ * written to Notion come from Google, not from whatever the client posted.
+ */
+export async function getCalendarEventById(eventId: string): Promise<CalendarEvent | null> {
+  const token = await getAccessToken()
+  const calendarId = normalizeEnvString(process.env.GOOGLE_CALENDAR_ID!)
+
+  const res = await fetch(
+    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(
+      calendarId
+    )}/events/${encodeURIComponent(eventId)}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  )
+
+  if (res.status === 404) return null
+
+  if (!res.ok) {
+    const text = await res.text()
+    throw new Error(`Google Calendar API error (${res.status}): ${text}`)
+  }
+
+  const event: GCalEvent = await res.json()
+  if (event.status === 'cancelled') return null
+
+  return toCalendarEvent(event)
+}
+
 // ─── Date helpers ─────────────────────────────────────────────────────────────
 
 function getEndOfWeek(date = new Date()): Date {

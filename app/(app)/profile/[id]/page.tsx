@@ -9,6 +9,7 @@ import {
 } from '@/lib/notion'
 import InternshipList from '@/components/InternshipList'
 import ClubList from '@/components/ClubList'
+import { countAttended, getAttendanceForProfile } from '@/lib/notion-attendance'
 import ProfileMediaEditor from '@/components/profile/ProfileMediaEditor'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button-variants'
@@ -32,11 +33,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
   const { id } = await params
   const { userId } = await auth()
 
-  const [profile, internships, clubs, viewer] = await Promise.all([
+  const [profile, internships, clubs, viewer, attendance] = await Promise.all([
     getProfileById(id),
     getInternshipsByProfileId(id),
     getClubsByProfileId(id),
     getProfileByClerkId(userId!),
+    getAttendanceForProfile(id),
   ])
 
   if (!profile) notFound()
@@ -246,6 +248,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             )}
             {profile.location && <InfoRow label="Location" value={profile.location} />}
             {profile.hometown && <InfoRow label="Hometown" value={profile.hometown} />}
+            {attendance.length > 0 && (
+              <InfoRow
+                label="Events attended"
+                value={`${countAttended(attendance)} of ${attendance.length}`}
+              />
+            )}
           </div>
         </div>
       </div>

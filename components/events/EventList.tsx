@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { CalendarEvent } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
 import { MapPin, Clock, Calendar } from 'lucide-react'
@@ -51,7 +52,10 @@ function EventItem({ event }: { event: CalendarEvent }) {
   const time = formatTime(event.start)
 
   return (
-    <div className="group flex gap-3 items-start transition-colors duration-150 rounded-lg p-2 -mx-2 hover:bg-accent/40">
+    <Link
+      href={`/events/${encodeURIComponent(event.id)}`}
+      className="group flex gap-3 items-start transition-colors duration-150 rounded-lg p-2 -mx-2 hover:bg-accent/40"
+    >
       <div className="min-w-0 flex-1 space-y-1">
         <div className="flex items-center gap-1.5 flex-wrap">
           <p className="text-sm font-semibold leading-snug">{event.title}</p>
@@ -77,7 +81,7 @@ function EventItem({ event }: { event: CalendarEvent }) {
           <p className="text-xs text-muted-foreground/80 line-clamp-2">{event.description}</p>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
 

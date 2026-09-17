@@ -1,4 +1,5 @@
-import type { Profile, TeamUpdate } from '@/lib/types'
+import type { AttendanceRecord, Profile, TeamUpdate } from '@/lib/types'
+import { attendanceRate } from '@/lib/notion-attendance'
 import { TEAMS } from '@/lib/teams'
 import TeamCard from './TeamCard'
 import { cn } from '@/lib/utils'
@@ -6,9 +7,12 @@ import { cn } from '@/lib/utils'
 export default function TeamsGrid({
   profiles,
   updates,
+  attendanceByProfile = {},
 }: {
   profiles: Profile[]
   updates: TeamUpdate[]
+  /** profile_id → their attendance records, for the per-team rate badge */
+  attendanceByProfile?: Record<string, AttendanceRecord[]>
 }) {
   const membersByTeam = new Map<string, Profile[]>()
   for (const p of profiles) {
@@ -51,6 +55,11 @@ export default function TeamsGrid({
             team={team}
             members={membersByTeam.get(team.name) ?? []}
             updates={updatesByTeam.get(team.name) ?? []}
+            attendanceRate={attendanceRate(
+              (membersByTeam.get(team.name) ?? []).flatMap(
+                (member) => attendanceByProfile[member.id] ?? []
+              )
+            )}
           />
         </div>
       ))}

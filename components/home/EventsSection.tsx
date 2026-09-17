@@ -136,7 +136,7 @@ export default async function EventsSection() {
   }
 
   let events: CalendarEvent[] = []
-  let error = false
+  let failed = false
 
   try {
     events = await getUpcomingCalendarEvents()
@@ -145,7 +145,7 @@ export default async function EventsSection() {
       configIssues,
       error: serializeCalendarError(error),
     })}`)
-    error = true
+    failed = true
   }
 
   return (
@@ -158,7 +158,7 @@ export default async function EventsSection() {
         <CardDescription>What&apos;s on the calendar</CardDescription>
       </CardHeader>
       <CardContent className="pt-3">
-        {error ? (
+        {failed ? (
           <div className="py-8 text-center">
             <p className="text-sm text-muted-foreground">Could not load events.</p>
             <p className="text-xs text-muted-foreground/60 mt-1">Try refreshing the page.</p>

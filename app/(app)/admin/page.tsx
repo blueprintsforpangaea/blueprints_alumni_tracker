@@ -5,6 +5,9 @@ import { getAllProfiles, getProfileByClerkId } from '@/lib/notion'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import AdminActions from './AdminActions'
+import AttendanceTable, { type AttendanceRow } from '@/components/admin/AttendanceTable'
+import { attendanceRate, getAllAttendance } from '@/lib/notion-attendance'
+import type { AttendanceRecord } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,7 +16,32 @@ export default async function AdminPage() {
   const viewer = await getProfileByClerkId(userId!)
   if (!viewer?.is_admin) redirect('/dashboard')
 
-  const profiles = await getAllProfiles()
+  const [profiles, attendance] = await Promise.all([getAllProfiles(), getAllAttendance()])
+
+  const byProfile = new Map<string, AttendanceRecord[]>()
+  for (const record of attendance) {
+    if (!record.profile_id) continue
+    const bucket = byProfile.get(record.profile_id)
+    if (bucket) bucket.push(record)
+    else byProfile.set(record.profile_id, [record])
+  }
+
+  const attendanceRows: AttendanceRow[] = profiles.map((p) => {
+    const records = byProfile.get(p.id) ?? []
+    const count = (status: AttendanceRecord['status']) =>
+      records.filter((r) => r.status === status).length
+
+    return {
+      profile_id: p.id,
+      name: p.full_name,
+      teams: p.team.join(', '),
+      present: count('present'),
+      late: count('late'),
+      excused: count('excused'),
+      absent: count('absent'),
+      rate: attendanceRate(records),
+    }
+  })
 
   return (
     <div className="space-y-6">
@@ -68,6 +96,8 @@ export default async function AdminPage() {
           </tbody>
         </table>
       </div>
+
+      {attendance.length > 0 && <AttendanceTable rows={attendanceRows} />}
     </div>
   )
 }

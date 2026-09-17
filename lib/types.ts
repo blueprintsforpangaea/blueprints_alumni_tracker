@@ -138,6 +138,20 @@ export type TeamUpdate = {
   published: boolean
 }
 
+// ─── Attendance types ─────────────────────────────────────────────────────────
+
+export type AttendanceStatus = 'present' | 'late' | 'excused' | 'absent'
+
+export type AttendanceRecord = {
+  id: string
+  profile_id: string
+  /** Google Calendar event id. With singleEvents=true each occurrence has its own. */
+  event_id: string
+  event_title: string
+  date: string | null
+  status: AttendanceStatus
+}
+
 // ─── Events page types ────────────────────────────────────────────────────────
 
 export type CalendarEvent = {

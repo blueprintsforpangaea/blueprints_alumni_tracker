@@ -110,6 +110,29 @@ Copy the database ID → `NOTION_TEAM_UPDATES_DB_ID`
 
 ---
 
+### Attendance Database
+
+Optional. Without it, the roster on an event page shows a setup notice and
+nothing else breaks.
+
+| Property Name | Type     | Notes                                        |
+|---------------|----------|----------------------------------------------|
+| `Name`        | Title    | `<event title> — <member name>`, written by the app |
+| `Profile`     | Relation | Points to Profiles DB                        |
+| `event_id`    | Text     | Google Calendar event id                     |
+| `event_title` | Text     | Denormalized so the database reads on its own |
+| `date`        | Date     | Event start                                  |
+| `status`      | Select   | `present`, `late`, `excused`, `absent`       |
+| `recorded_by` | Relation | Points to Profiles DB — who marked the roster |
+
+Copy the database ID → `NOTION_ATTENDANCE_DB_ID`
+
+Rosters are taken by admins from an event's page (`/events/<id>`). A member is
+counted as attending when they are `present` or `late`; `excused` is left out of
+their rate entirely rather than counting against them.
+
+---
+
 ## 3. Share Databases with Your Integration
 
 For each of the four databases:

@@ -3,7 +3,7 @@ import type { TeamDef } from '@/lib/teams'
 import { Badge } from '@/components/ui/badge'
 import TeamMembersList from './TeamMembersList'
 import TeamUpdatesFeed from './TeamUpdatesFeed'
-import { Users, Activity } from 'lucide-react'
+import { Users, Activity, CalendarCheck } from 'lucide-react'
 
 const UPDATES_LIMIT = 3
 
@@ -11,10 +11,13 @@ export default function TeamCard({
   team,
   members,
   updates,
+  attendanceRate = null,
 }: {
   team: TeamDef
   members: Profile[]
   updates: TeamUpdate[]
+  /** 0–1, or null when this team has no attendance recorded yet */
+  attendanceRate?: number | null
 }) {
   const Icon = team.icon
   const visibleUpdates = updates.slice(0, UPDATES_LIMIT)
@@ -49,6 +52,16 @@ export default function TeamCard({
             <Activity className="size-3" />
             {updates.length}
           </Badge>
+          {attendanceRate !== null && (
+            <Badge
+              variant="outline"
+              className="h-5 gap-1 text-[10px]"
+              title="Share of expected events attended"
+            >
+              <CalendarCheck className="size-3" />
+              {Math.round(attendanceRate * 100)}%
+            </Badge>
+          )}
         </div>
       </header>
 

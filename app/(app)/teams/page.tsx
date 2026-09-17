@@ -1,5 +1,7 @@
 import { getAllProfiles } from '@/lib/notion'
 import { getTeamUpdates } from '@/lib/notion-teams'
+import { getAllAttendance } from '@/lib/notion-attendance'
+import type { AttendanceRecord } from '@/lib/types'
 import { TEAMS } from '@/lib/teams'
 import { Badge } from '@/components/ui/badge'
 import { FolderKanban } from 'lucide-react'
@@ -9,10 +11,17 @@ export const metadata = { title: 'Teams — Blueprints for Pangaea' }
 export const dynamic = 'force-dynamic'
 
 export default async function TeamsPage() {
-  const [profiles, updates] = await Promise.all([
+  const [profiles, updates, attendance] = await Promise.all([
     getAllProfiles(),
     getTeamUpdates(),
+    getAllAttendance(),
   ])
+
+  const attendanceByProfile: Record<string, AttendanceRecord[]> = {}
+  for (const record of attendance) {
+    if (!record.profile_id) continue
+    ;(attendanceByProfile[record.profile_id] ??= []).push(record)
+  }
 
   const assigned = profiles.filter((p) => p.team.length > 0).length
 
@@ -40,7 +49,11 @@ export default async function TeamsPage() {
         </div>
       </div>
 
-      <TeamsGrid profiles={profiles} updates={updates} />
+      <TeamsGrid
+        profiles={profiles}
+        updates={updates}
+        attendanceByProfile={attendanceByProfile}
+      />
     </div>
   )
 }

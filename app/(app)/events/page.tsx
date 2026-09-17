@@ -64,7 +64,7 @@ export default async function EventsPage({
   }
 
   let events: CalendarEvent[] = []
-  let error = false
+  let failed = false
 
   try {
     const { timeMin, timeMax } = getThreeMonthWindow(currentMonth)
@@ -75,10 +75,10 @@ export default async function EventsPage({
       configIssues,
       error: serializeCalendarError(error),
     })}`)
-    error = true
+    failed = true
   }
 
-  if (error) {
+  if (failed) {
     return (
       <div className="space-y-6">
         <PageHeader />
