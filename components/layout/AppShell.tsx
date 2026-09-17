@@ -162,14 +162,26 @@ export default function AppShell({
               >
                 <X className="size-4" />
               </button>
-              <div className="logo-plate flex items-center justify-center rounded-[1.5rem] p-4">
+              <div className="flex items-center justify-center p-4">
+                {/* Two marks, one per theme: the colour logo's ink is navy and
+                    its globe grid lines are knockouts, so it needs a light
+                    background; the white mark is a knockout built for dark. */}
                 <Image
                   src="/brand/blueprints-logo.png"
                   alt="Blueprints for Pangaea"
                   width={936}
                   height={556}
                   priority
-                  className="h-auto w-[11rem]"
+                  className="h-auto w-[11rem] dark:hidden"
+                />
+                <Image
+                  src="/brand/blueprints-logo-white.png"
+                  alt=""
+                  aria-hidden
+                  width={936}
+                  height={556}
+                  priority
+                  className="hidden h-auto w-[11rem] dark:block"
                 />
               </div>
               <div className="mt-4 space-y-1">

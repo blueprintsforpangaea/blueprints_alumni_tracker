@@ -153,16 +153,25 @@ export default function HomePage() {
             <div className="brand-panel relative w-full max-w-sm overflow-hidden rounded-[2.25rem] p-8">
               <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,oklch(0.98_0.015_245),transparent_72%)] dark:bg-[radial-gradient(circle_at_top,oklch(0.3_0.04_258),transparent_72%)]" />
               <div className="relative flex flex-col items-center gap-6">
-                <div className="logo-plate rounded-[1.5rem] px-5 py-4">
+                <>
                   <Image
                     src="/brand/blueprints-logo.png"
                     alt="Blueprints for Pangaea"
                     width={936}
                     height={556}
                     priority
-                    className="h-auto w-full max-w-[16rem]"
+                    className="h-auto w-full max-w-[16rem] dark:hidden"
                   />
-                </div>
+                  <Image
+                    src="/brand/blueprints-logo-white.png"
+                    alt=""
+                    aria-hidden
+                    width={936}
+                    height={556}
+                    priority
+                    className="hidden h-auto w-full max-w-[16rem] dark:block"
+                  />
+                </>
                 <div className="flex flex-wrap justify-center gap-2">
                   {["Directory", "Events", "Org Needs", "Ideas"].map(
                     (label) => (

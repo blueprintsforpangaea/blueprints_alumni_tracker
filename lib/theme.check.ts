@@ -100,25 +100,32 @@ for (const mode of [':root', '.dark'] as const) {
   }
 }
 
-// ─── The logo plate ───────────────────────────────────────────────────────────
-// The logo PNG is 64% transparent, its globe grid lines are knockouts, and its
-// darkest ink is oklch(0.20 0.095 262). On a dark panel that ink disappears, so
-// dark mode renders it on a light plate. Assert the plate really is light.
+// ─── The two logo marks ───────────────────────────────────────────────────────
+// Both PNGs are 64% transparent with the globe's grid lines as knockouts, so
+// each one shows the page through its gaps and has to be paired with the right
+// background. The colour mark's darkest ink is navy; the white mark is a single
+// #f0f0f0 knockout. Each is swapped in by a dark: variant at the render sites.
 
-const LOGO_INK: Oklch = [0.201, 0.095, 262]
-const darkPlate = token('.dark', 'logo-plate')
+const COLOUR_LOGO_INK: Oklch = [0.201, 0.095, 262] // sampled from blueprints-logo.png
+const WHITE_LOGO_INK: Oklch = [0.949, 0, 0] // #f0f0f0, from blueprints-logo-white.png
 
 assert.ok(
-  darkPlate[0] > 0.85,
-  `dark --logo-plate must stay near-white so the navy logo reads, got L=${darkPlate[0]}`
+  contrast(COLOUR_LOGO_INK, token(':root', 'background')) >= AA_LARGE,
+  'the colour logo must read on the light background'
 )
 assert.ok(
-  contrast(LOGO_INK, darkPlate) >= AA_LARGE,
-  `the logo's darkest ink needs ${AA_LARGE}:1 against its plate, got ${contrast(
-    LOGO_INK,
-    darkPlate
-  ).toFixed(2)}:1`
+  contrast(WHITE_LOGO_INK, token('.dark', 'background')) >= AA_LARGE,
+  'the white logo must read on the dark background'
 )
-assert.ok(token(':root', 'logo-plate')[0] > 0.85, 'the light-mode plate must also be light')
+
+// And each must be wrong for the other mode — that's why both files exist.
+assert.ok(
+  contrast(WHITE_LOGO_INK, token(':root', 'background')) < AA_LARGE,
+  'the white logo on a light background would be invisible; it must stay dark-only'
+)
+assert.ok(
+  contrast(COLOUR_LOGO_INK, token('.dark', 'background')) < AA_LARGE,
+  'the colour logo on a dark background would be invisible; it must stay light-only'
+)
 
 console.log('theme checks passed')

@@ -119,9 +119,6 @@
   --avatar-ring: oklch(1 0 0);
   /* Lineage lines on the Connections page. */
   --connector: oklch(0.76 0.05 245 / 0.85);
-  /* The logo is a transparent PNG whose globe grid lines are knockouts and whose
-     ink is navy, so it needs a light plate to stay readable on a dark surface. */
-  --logo-plate: oklch(1 0 0 / 0.6);
 
   --sidebar: oklch(0.99 0.001 255 / 0.82);
   --sidebar-foreground: oklch(0.23 0.015 255);
@@ -183,9 +180,6 @@
   --border-field: oklch(0.52 0.06 255 / 0.4);
   --avatar-ring: oklch(0.34 0.02 256);
   --connector: oklch(0.58 0.07 250 / 0.9);
-  /* Near-white plate keeps the navy logo ink and its knocked-out grid lines
-     legible. Slightly warm-free white so it doesn't glare. */
-  --logo-plate: oklch(0.96 0.006 255 / 0.94);
 
   --sidebar: oklch(0.18 0.01 255 / 0.84);
   --sidebar-foreground: oklch(0.94 0.004 255);
@@ -344,13 +338,6 @@
   .avatar-ring {
     --tw-ring-color: var(--avatar-ring);
     border-color: var(--avatar-ring);
-  }
-
-  /* A light plate behind the logo. The PNG's grid lines are transparent
-     knockouts and its ink is navy, so on a dark panel it would read as solid
-     blobs with invisible seams. */
-  .logo-plate {
-    background: var(--logo-plate);
   }
 
   .text-brand-gradient {
