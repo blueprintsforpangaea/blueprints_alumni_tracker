@@ -54,12 +54,13 @@ export default async function EventDetailPage({
   const isAdmin = viewer?.is_admin ?? false
 
   // Only admins can see or change the roster, so nobody else pays for the reads.
-  const [members, records] = isAdmin
-    ? await Promise.all([
-        getAllProfiles({ status: 'Current Member' }),
-        getAttendanceForEvent(eventId),
-      ])
+  // Filter here rather than passing filters to getAllProfiles: the unfiltered
+  // call is already cached and warm from /dashboard, /teams and /admin.
+  const [allProfiles, records] = isAdmin
+    ? await Promise.all([getAllProfiles(), getAttendanceForEvent(eventId)])
     : [[], []]
+
+  const members = allProfiles.filter((p) => p.status === 'Current Member')
 
   const initialStatuses: Record<string, AttendanceStatus> = Object.fromEntries(
     records.filter((r) => r.profile_id).map((r) => [r.profile_id, r.status])
